@@ -26,11 +26,9 @@ namespace BermudaGamesCase.Managers
 
         private void EventSubscription()
         {
-            CoreGameSignals.OnGameStarted += SetSplineFollower;
         }
         private void EventUnsubscription()
         {
-            CoreGameSignals.OnGameStarted -= SetSplineFollower;
         }
         #endregion
 

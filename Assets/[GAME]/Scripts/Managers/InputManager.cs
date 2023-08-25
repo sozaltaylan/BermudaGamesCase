@@ -7,23 +7,32 @@ namespace BermudaGamesCase.Managers
     {
         #region Variables
 
-        private bool isInput;
+        [SerializeField] private Vector3 _mousefirstPosition;
+        [SerializeField] private Vector3 _mouseHoldPosition;
 
-        private Vector3 _mousefirstPosition;
-        private Vector3 _mouseHoldPosition;
-        private Vector3 _remoteControl;
-
-        [SerializeField] private float xMinumumClamp;
-        [SerializeField] private float xMaximumClamp;
+        private Camera _camera;
 
         [SerializeField] private float InputSpeed;
-        private float _xValue;
 
+        private float inputTimer;
+        private float inputMultiplier = .05f;
+        private float _horizontal;
 
+        #region Properties
+        public float Horizantal
+        {
+            get { return _horizontal; }
+        }
+
+        #endregion
         #endregion
 
         #region Methods
 
+        private void Start()
+        {
+            //_camera = Camera.main;
+        }
 
         private void Update()
         {
@@ -44,25 +53,28 @@ namespace BermudaGamesCase.Managers
 
         private void SetFirstTouch()
         {
-            if (!isInput)
-            {
-                CoreGameSignals.OnGameStarted?.Invoke(true);
-                isInput = true;
-            }
-
-            _mousefirstPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            var mousePos = Input.mousePosition;
+            _mousefirstPosition = Camera.main.ScreenToViewportPoint(mousePos);
         }
 
         private void SetHoldClick()
         {
-            _mouseHoldPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            inputTimer += Time.deltaTime;
+            if (inputTimer > inputMultiplier)
+            {
+                SetFirstTouch();
+                inputTimer = 0;
+            }
+
+            var mousePos = Input.mousePosition;
+            _mouseHoldPosition = Camera.main.ScreenToViewportPoint(mousePos);
             var dist = (_mouseHoldPosition - _mousefirstPosition) * InputSpeed;
-            var value = _xValue - dist.x;
-            _remoteControl.x = Mathf.Clamp(value, xMinumumClamp, xMaximumClamp);
+            _horizontal = dist.x;
+
         }
         private void UpPosition()
         {
-            _xValue = _remoteControl.x;
+
         }
         #endregion
     }

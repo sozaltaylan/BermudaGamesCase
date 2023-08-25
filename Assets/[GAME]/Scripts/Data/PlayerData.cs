@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerData", menuName = "CustomData/PlayerData")]
 public class PlayerData : ScriptableObject
 {
-    public float speed;
-    public float rotationSpeed;
+    public float Speed;
+    public float RotationSpeed;
+    public Vector2 HorizontalClamp;
 }

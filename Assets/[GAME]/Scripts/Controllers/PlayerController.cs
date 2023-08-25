@@ -1,3 +1,4 @@
+using BermudaGamesCase.Managers;
 using Dreamteck.Splines;
 using UnityEngine;
 
@@ -8,12 +9,16 @@ namespace BermudaGamesCase.Controllers
     {
         #region Variables
 
+        private float movementXPosition;
+
         #region SerializedFields
 
         [SerializeField] private SplineFollower splineFollower;
         [SerializeField] private AnimationController animationController;
         [SerializeField] private MoneyBarController moneyBarController;
+        [SerializeField] private PlayerData playerData;
 
+        [SerializeField] private float lerpSpeed;
         #endregion
 
         #endregion
@@ -23,6 +28,15 @@ namespace BermudaGamesCase.Controllers
 
         private void Update()
         {
+            var xPosition = InputManager.Instance.Horizantal;
+            movementXPosition += xPosition;
+            movementXPosition = Mathf.Clamp(movementXPosition, playerData.HorizontalClamp.x, playerData.HorizontalClamp.y);
+
+            var offsetPos = splineFollower.offsetModifier.keys[0].offset.x;
+            var lerpOffset = Mathf.Lerp(offsetPos, movementXPosition, Time.deltaTime * lerpSpeed);
+
+            splineFollower.offsetModifier.keys[0].offset.x = lerpOffset;
+
             animationController.SetAnimationSpeed(splineFollower.followSpeed);
         }
         public void SetSplineFollower(bool active)
@@ -30,11 +44,6 @@ namespace BermudaGamesCase.Controllers
             splineFollower.enabled = active;
         }
 
-
-        private void Movement()
-        {
-
-        }
         private void OnTriggerEnter(Collider coll)
         {
             if (coll.gameObject.TryGetComponent(out CollectableItemController item))

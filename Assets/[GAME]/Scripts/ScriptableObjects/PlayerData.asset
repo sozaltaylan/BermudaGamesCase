@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b6312e734c4a6e4aa14a3e22ed88cab, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  speed: 0
-  rotationSpeed: 0
+  Speed: 3
+  RotationSpeed: 1
+  HorizontalClamp: {x: -2.3, y: 2.3}
