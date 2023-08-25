@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 639532487493090015}
   - component: {fileID: 4562085940618065274}
   - component: {fileID: 1777584520779202992}
+  - component: {fileID: 4138624675885485729}
   m_Layer: 0
   m_Name: Wine Bottle
   m_TagString: Untagged
@@ -85,3 +86,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4138624675885485729
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264520250415423589}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.0735872, y: 3.0268934, z: 10.641165}
+  m_Center: {x: 0, y: -0.00000005960466, z: 4.9395823}

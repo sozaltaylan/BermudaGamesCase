@@ -7,12 +7,33 @@ namespace BermudaGamesCase.Managers
     {
         #region Variables
 
+        [SerializeField] private float totalMoney;
+        #endregion
+
+        #region Events
+        private void OnEnable()
+        {
+            EventSubscription();
+        }
+        private void OnDisable()
+        {
+            EventUnsubscription();
+        }
+
+        private void EventSubscription()
+        {
+        }
+        private void EventUnsubscription()
+        {
+        }
 
         #endregion
 
         #region Methods
 
+      
 
+      
         #endregion
     }
 }
