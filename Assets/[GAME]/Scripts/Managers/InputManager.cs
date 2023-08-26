@@ -9,13 +9,12 @@ namespace BermudaGamesCase.Managers
 
         [SerializeField] private Vector3 _mousefirstPosition;
         [SerializeField] private Vector3 _mouseHoldPosition;
-
-        private Camera _camera;
+     
 
         [SerializeField] private float InputSpeed;
 
         private float inputTimer;
-        private float inputMultiplier = .05f;
+        [SerializeField] private float inputMultiplier;
         private float _horizontal;
 
         #region Properties
@@ -40,11 +39,11 @@ namespace BermudaGamesCase.Managers
             {
                 SetFirstTouch();
             }
-            else if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0))
             {
                 SetHoldClick();
             }
-            else if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0))
             {
                 UpPosition();
             }

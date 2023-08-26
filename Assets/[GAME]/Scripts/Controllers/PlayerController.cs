@@ -1,6 +1,8 @@
 using BermudaGamesCase.Managers;
+using BermudaGamesCase.Signals;
 using Dreamteck.Splines;
 using UnityEngine;
+using BermudaGamesCase.Others;
 
 namespace BermudaGamesCase.Controllers
 {
@@ -14,11 +16,16 @@ namespace BermudaGamesCase.Controllers
         #region SerializedFields
 
         [SerializeField] private SplineFollower splineFollower;
-        [SerializeField] private AnimationController animationController;
+        [SerializeField] private ModelAnimation animationController;
         [SerializeField] private MoneyBarController moneyBarController;
         [SerializeField] private PlayerData playerData;
+        
+        [SerializeField] private PlayerModel playerModel;
+        [SerializeField] private float rotationAngle;
+        [SerializeField] private float maxRotateAngle;
 
         [SerializeField] private float lerpSpeed;
+
         #endregion
 
         #endregion
@@ -36,8 +43,17 @@ namespace BermudaGamesCase.Controllers
             var lerpOffset = Mathf.Lerp(offsetPos, movementXPosition, Time.deltaTime * lerpSpeed);
 
             splineFollower.offsetModifier.keys[0].offset.x = lerpOffset;
+            CoreGameSignals.onChangeCameraTargetPosition?.Invoke(lerpOffset);
 
-            animationController.SetAnimationSpeed(splineFollower.followSpeed);
+            var rotateInput = xPosition * rotationAngle;
+            var clampedRotate = Mathf.Clamp(rotateInput,-maxRotateAngle,maxRotateAngle);
+
+            Quaternion lerpRot = Quaternion.Slerp(playerModel.transform.localRotation, Quaternion.AngleAxis(clampedRotate, playerModel.transform.up), Time.deltaTime * lerpSpeed);
+            playerModel.transform.localRotation = lerpRot;
+
+
+
+            //animationController.SetAnimationSpeed(splineFollower.followSpeed);
         }
         public void SetSplineFollower(bool active)
         {
@@ -52,6 +68,8 @@ namespace BermudaGamesCase.Controllers
                 moneyBarController.SetMoney(item.itemMoney);
             }
         }
+
+
         #endregion
     }
 }
