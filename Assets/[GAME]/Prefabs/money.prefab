@@ -127,6 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f24beed01f007b44a3e090924259d3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 15
+  shakeDuration: 1
+  shakeStrength: 0.2
   itemMoney: 0
   itemData: {fileID: 11400000, guid: 7a09e2c2e2a21b64094dfb6329d05fcc, type: 2}
   particle: {fileID: 190236, guid: 39f586f40e7d928499bfe946ffb04ad5, type: 3}

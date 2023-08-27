@@ -8,7 +8,8 @@
         RICH,
         JOY,
         SAD,
-        DANCE
+        DANCE,
+        DEFEAT
 
     }
 }

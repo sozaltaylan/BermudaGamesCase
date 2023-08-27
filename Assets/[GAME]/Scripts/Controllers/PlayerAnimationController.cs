@@ -55,7 +55,11 @@ namespace BermudaGamesCase.Controllers
         public void SetDanceAnimation(bool active)
         {
             animator.SetBool(AnimatorParameters.DANCE.ToString(), active);
+        }
 
+        public void SetDefeatAnimation(bool active)
+        {
+            animator.SetBool(AnimatorParameters.DEFEAT.ToString(), active);
         }
         private void GameStart()
         {

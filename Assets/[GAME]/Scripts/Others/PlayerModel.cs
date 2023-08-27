@@ -18,6 +18,7 @@ namespace BermudaGamesCase.Others
         private ModelState _selectedModel;
 
         [SerializeField] private PlayerAnimationController playerAnimationController;
+        [SerializeField] private MoneyBarController moneyBarController;
 
 
         private bool isMove;
@@ -30,13 +31,22 @@ namespace BermudaGamesCase.Others
             _selectedModel = listModelStates[0];
         }
 
-        private void SwitchModel(PlayerType playerType)
+        private void SwitchModel(PlayerType playerType, int playerIndex, Color color)
         {
             if (_selectedModel.playerType != playerType)
             {
-                DOTurn();
+                if (_selectedModel.index < playerIndex)
+                {
+                    DOTurn();
+                    moneyBarController.CreateStatuTextAnimation();
+                }
+                else
+                {
+                    playerAnimationController.SetSad(true);
+                    moneyBarController.CreateStatuTextAnimation();
+                }
             }
-            
+
         }
 
         private void DOTurn()
@@ -56,7 +66,7 @@ namespace BermudaGamesCase.Others
                 {
                     if (currentMoney >= listModelStates[i].upgradeMoney && currentMoney < listModelStates[i + 1].upgradeMoney)
                     {
-                        SwitchModel(listModelStates[i].playerType);
+                        SwitchModel(listModelStates[i].playerType, listModelStates[i].index, listModelStates[i].color);
                         _selectedModel = listModelStates[i];
                         listModelStates[i].model.SetActive(true);
                         playerAnimationController.SetAnimation(listModelStates[i].animatorParamater.ToString(), true);
@@ -72,9 +82,11 @@ namespace BermudaGamesCase.Others
                 {
                     if (currentMoney >= listModelStates[i].upgradeMoney)
                     {
-                        SwitchModel(listModelStates[i].playerType);
+                        SwitchModel(listModelStates[i].playerType, listModelStates[i].index, listModelStates[i].color);
                         _selectedModel = listModelStates[i];
                         listModelStates[i].model.SetActive(true);
+                        playerAnimationController.SetAnimation(listModelStates[i].animatorParamater.ToString(), true);
+
                     }
                     else
                     {
@@ -99,6 +111,11 @@ namespace BermudaGamesCase.Others
             return default;
         }
 
+        public bool IsPoor()
+        {
+            bool isPoor = _selectedModel.playerType == PlayerType.POOR ? true : false;
+            return isPoor;
+        }
         #endregion
 
     }
@@ -110,6 +127,8 @@ namespace BermudaGamesCase.Others
         public GameObject model;
         public float upgradeMoney;
         public AnimatorParameters animatorParamater;
+        public int index;
+        public Color color;
     }
 
 }

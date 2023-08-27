@@ -1,4 +1,5 @@
 using BermudaGamesCase.Enums;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,9 @@ public class MoneyBarController : MonoBehaviour
     [SerializeField] private float currentMoney, maxMoney;
     [SerializeField] private float startMoney;
 
+    [SerializeField] private GameObject playerUI;
     [SerializeField] private TextMeshProUGUI statuText;
+    [SerializeField] private TextMeshProUGUI statuAnimText;
 
     float lerpSpeed;
 
@@ -61,8 +64,21 @@ public class MoneyBarController : MonoBehaviour
             statuText.text = PlayerType.RICH.ToString();
         }
     }
+
     public void SetMoney(float money)
     {
             currentMoney += money;
+    }
+
+    public void SetBarUI(bool active)
+    {
+        playerUI.SetActive(active);
+    }
+
+    public void CreateStatuTextAnimation()
+    {
+        statuAnimText.gameObject.SetActive(true);
+        statuAnimText.rectTransform.DOScale(3, 2);
+        statuAnimText.DOFade(.5f, 2);
     }
 }

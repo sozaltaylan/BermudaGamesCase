@@ -3,6 +3,7 @@ using BermudaGamesCase.Exceptions;
 using Dreamteck.Splines;
 using BermudaGamesCase.Controllers;
 using BermudaGamesCase.Signals;
+using Cinemachine;
 
 namespace BermudaGamesCase.Managers
 {
@@ -11,6 +12,7 @@ namespace BermudaGamesCase.Managers
         #region Variables
 
         [SerializeField] private SplineFollower cameraSplineTarget;
+        [SerializeField] private CinemachineVirtualCamera playerCamera;
         [SerializeField] private float splineSpeed;
 
         [Header("Follow Ref ")]
@@ -46,7 +48,11 @@ namespace BermudaGamesCase.Managers
             xPosition = Mathf.Clamp(xPosition, clampPosition.x, clampPosition.y);
             cameraSplineTarget.offsetModifier.keys[0].offset.x = xPosition;
         }
-
+        public void StopFollow()
+        {
+            playerCamera.Follow = null;
+            playerCamera.LookAt = null;
+        }
         #endregion
     }
 }

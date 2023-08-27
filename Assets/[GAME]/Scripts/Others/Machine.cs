@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class Machine : MonoBehaviour
     public void Interaction()
     {
         particle.Play(true);
+        transform.DOPunchScale(Vector3.one * .3f, .15f);
         Destroy(this.gameObject,.5f);
     }
 }

@@ -20,10 +20,14 @@ namespace BermudaGamesCase.Others
         #endregion
         #region Methods
 
+        private void Awake()
+        {
+            _textMeshPro = GetComponentInChildren<TextMeshProUGUI>();   
+        }
         private void Start()
         {
             money = itemData.amount;
-            
+            _textMeshPro.text = bannerText;
         }
         
         public void SetParticle()

@@ -4,6 +4,7 @@ using Dreamteck.Splines;
 using UnityEngine;
 using BermudaGamesCase.Others;
 using System.Collections;
+using DG.Tweening;
 
 namespace BermudaGamesCase.Controllers
 {
@@ -111,12 +112,25 @@ namespace BermudaGamesCase.Controllers
             }
             else if (coll.gameObject.TryGetComponent(out FinishLine finish))
             {
-                SetSplineFollower(false);
-                // TODO : final paray? sorgula
-                playerAnimationController.SetDanceAnimation(true);
+
+                SetFinal();
+
             }
         }
 
+        private void SetFinal()
+        {
+            SetSplineFollower(false);
+            CameraManager.Instance.StopFollow();
+            transform.DORotate(Vector3.up * 180, .5f, RotateMode.LocalAxisAdd);
+            moneyBarController.SetBarUI(false);
+
+
+            if (!playerModel.IsPoor())
+                playerAnimationController.SetDanceAnimation(true);
+            else
+                playerAnimationController.SetDefeatAnimation(true);
+        }
         IEnumerator SetAtmWait()
         {
             yield return new WaitForSeconds(.5f);

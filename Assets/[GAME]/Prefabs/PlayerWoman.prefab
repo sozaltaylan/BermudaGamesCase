@@ -94,7 +94,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1141094065
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1409,10 +1409,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f65e78a4ada8f2459cbe1b62c2c3c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  listModelAnimation:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  listModelStates: []
+  playerAnimationController: {fileID: 0}
 --- !u!1 &388237042857780026
 GameObject:
   m_ObjectHideFlags: 0
@@ -14495,6 +14493,7 @@ MonoBehaviour:
   moneyBarController: {fileID: 543450653625476612}
   playerData: {fileID: 11400000, guid: 993a1a6e8f73bec419caf75bf5ac03f1, type: 2}
   playerModel: {fileID: 4696619490314051888}
+  playerAnimationController: {fileID: 0}
   rotationAngle: 500
   maxRotateAngle: 50
   lerpSpeed: 10
@@ -14514,7 +14513,9 @@ MonoBehaviour:
   currentMoney: 0
   maxMoney: 100
   startMoney: 30
+  playerUI: {fileID: 0}
   statuText: {fileID: 1141094066}
+  statuTextAnimated: {fileID: 1141094066}
 --- !u!114 &8302921364683641119
 MonoBehaviour:
   m_ObjectHideFlags: 0
