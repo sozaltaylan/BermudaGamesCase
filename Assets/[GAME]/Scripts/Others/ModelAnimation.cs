@@ -9,24 +9,16 @@ namespace BermudaGamesCase.Others
     {
         #region Variables
 
-        [SerializeField] private Animator animator;
-        [SerializeField] private PlayerType playerType;
+        public Animator animator;
+        public PlayerType playerType;
+        public float money;
 
         #endregion
-
         #region Methods
 
-        public void SetAnimationSpeed(float animationSpeed)
+        public void SetAnimation(float animSpeed)
         {
-
-            float currentSpeed = animator.GetFloat("MoveSpeed");
-            DOVirtual.Float(currentSpeed, animationSpeed, .5f, SetAnimSpeed);
-
-        }
-        private void SetAnimSpeed(float x)
-        {
-            animator.SetFloat("MoveSpeed", x);
-
+            animator.SetFloat(AnimatorParameters.speed,animSpeed);
         }
 
         #endregion

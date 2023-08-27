@@ -6,7 +6,8 @@ namespace BermudaGamesCase.Signals
 {
     public static class CoreGameSignals 
     {
-        public static UnityAction<float> onChangeCameraTargetPosition;  
+        public static UnityAction onGameStart;
+        public static UnityAction<float> onChangeCameraTargetPosition;
     }
 }
 

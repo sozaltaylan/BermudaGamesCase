@@ -7,31 +7,19 @@ namespace BermudaGamesCase.Managers
     {
         #region Variables
 
-        [SerializeField] private Vector3 _mousefirstPosition;
-        [SerializeField] private Vector3 _mouseHoldPosition;
-     
+        [SerializeField] private float multiplier = 17f;
+        [SerializeField] private float sensibility = 17f;
 
-        [SerializeField] private float InputSpeed;
-
-        private float inputTimer;
-        [SerializeField] private float inputMultiplier;
-        private float _horizontal;
-
-        #region Properties
-        public float Horizantal
-        {
-            get { return _horizontal; }
-        }
+        private Vector3 _currentPos;
+        private Vector3 _lastPos;
 
         #endregion
+        #region Property
+        public float Horizontal { get; private set; }
         #endregion
+
 
         #region Methods
-
-        private void Start()
-        {
-            //_camera = Camera.main;
-        }
 
         private void Update()
         {
@@ -42,6 +30,7 @@ namespace BermudaGamesCase.Managers
             if (Input.GetMouseButton(0))
             {
                 SetHoldClick();
+
             }
             if (Input.GetMouseButtonUp(0))
             {
@@ -52,29 +41,21 @@ namespace BermudaGamesCase.Managers
 
         private void SetFirstTouch()
         {
-            var mousePos = Input.mousePosition;
-            _mousefirstPosition = Camera.main.ScreenToViewportPoint(mousePos);
+            _currentPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         }
 
         private void SetHoldClick()
         {
-            inputTimer += Time.deltaTime;
-            if (inputTimer > inputMultiplier)
-            {
-                SetFirstTouch();
-                inputTimer = 0;
-            }
-
-            var mousePos = Input.mousePosition;
-            _mouseHoldPosition = Camera.main.ScreenToViewportPoint(mousePos);
-            var dist = (_mouseHoldPosition - _mousefirstPosition) * InputSpeed;
-            _horizontal = dist.x;
-
+            _lastPos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            var dist = (_lastPos.x - _currentPos.x) * multiplier;
+            Horizontal = dist;
         }
         private void UpPosition()
         {
-
+            Horizontal = 0;
         }
+
+
         #endregion
     }
 }

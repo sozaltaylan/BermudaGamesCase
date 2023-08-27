@@ -1,5 +1,6 @@
 using UnityEngine;
 using BermudaGamesCase.Exceptions;
+using BermudaGamesCase.Signals;
 
 namespace BermudaGamesCase.Managers
 {
@@ -33,7 +34,6 @@ namespace BermudaGamesCase.Managers
 
       
 
-      
         #endregion
     }
 }

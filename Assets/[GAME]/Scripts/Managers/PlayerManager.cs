@@ -2,6 +2,7 @@ using UnityEngine;
 using BermudaGamesCase.Exceptions;
 using Dreamteck.Splines;
 using BermudaGamesCase.Controllers;
+using BermudaGamesCase.Signals;
 
 namespace BermudaGamesCase.Managers
 {
@@ -26,18 +27,21 @@ namespace BermudaGamesCase.Managers
 
         private void EventSubscription()
         {
+            CoreGameSignals.onGameStart += StartGame;
         }
         private void EventUnsubscription()
         {
+            CoreGameSignals.onGameStart -= StartGame;
         }
         #endregion
 
         #region Methods
 
-        private void SetSplineFollower(bool active)
+        private void StartGame()
         {
-            playerController.SetSplineFollower(active);
+            playerController.StartGame();
         }
+       
         #endregion
     }
 }

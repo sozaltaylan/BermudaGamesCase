@@ -10,6 +10,10 @@ public class MoneyBarController : MonoBehaviour
 
     float lerpSpeed;
 
+    #region Properties
+
+    public float CurrentMoney => currentMoney;
+    #endregion
     private void Start()
     {
         currentMoney = startMoney;
