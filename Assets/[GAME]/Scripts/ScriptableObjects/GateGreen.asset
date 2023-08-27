@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce479f8ad298f74e83e330e800e164e, type: 3}
   m_Name: GateGreen
   m_EditorClassIdentifier: 
-  amount: 10
+  amount: 20

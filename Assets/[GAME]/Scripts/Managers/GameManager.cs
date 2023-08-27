@@ -23,16 +23,27 @@ namespace BermudaGamesCase.Managers
 
         private void EventSubscription()
         {
+            CoreGameSignals.onChangeTotalMoney += SetTotalMoney;
         }
         private void EventUnsubscription()
         {
+            CoreGameSignals.onChangeTotalMoney -= SetTotalMoney;
+
         }
 
         #endregion
 
         #region Methods
 
-      
+        private void SetTotalMoney(float amount)
+        {
+            totalMoney += amount;
+        }
+        public float GetTotalMoney()
+        {
+            return totalMoney;
+        }
+
 
         #endregion
     }

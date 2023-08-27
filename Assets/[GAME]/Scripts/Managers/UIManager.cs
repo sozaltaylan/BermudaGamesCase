@@ -2,6 +2,8 @@ using UnityEngine;
 using BermudaGamesCase.Exceptions;
 using UnityEngine.UI;
 using TMPro;
+using BermudaGamesCase.Signals;
+using DG.Tweening;
 
 namespace BermudaGamesCase.Managers
 {
@@ -24,17 +26,22 @@ namespace BermudaGamesCase.Managers
 
         private void EventSubscription()
         {
+            CoreGameSignals.UpgradeTotalMoneyUI += UpgradeTotalMoneyUI;
         }
         private void EventUnsubscription()
         {
+            CoreGameSignals.UpgradeTotalMoneyUI -= UpgradeTotalMoneyUI;
         }
 
         #endregion
         #region Methods
 
-
-
-       
+        private void UpgradeTotalMoneyUI()
+        {
+            var totalMoney = GameManager.Instance.GetTotalMoney();
+            totalMoneyText.text = totalMoney.ToString();
+            totalMoneyText.transform.DOScale(1, 1);
+        }
 
         #endregion
 

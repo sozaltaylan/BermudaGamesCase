@@ -1,5 +1,14 @@
-﻿
-public static class AnimatorParameters
+﻿namespace BermudaGamesCase.Enums
 {
-    public const string speed = "speed";
+    public enum AnimatorParameters
+    {
+        ISMOVE,
+        POOR,
+        AVERAGE,
+        RICH,
+        JOY,
+        SAD,
+        DANCE
+
+    }
 }

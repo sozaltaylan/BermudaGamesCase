@@ -1,3 +1,5 @@
+using BermudaGamesCase.Enums;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +9,8 @@ public class MoneyBarController : MonoBehaviour
 
     [SerializeField] private float currentMoney, maxMoney;
     [SerializeField] private float startMoney;
+
+    [SerializeField] private TextMeshProUGUI statuText;
 
     float lerpSpeed;
 
@@ -26,6 +30,7 @@ public class MoneyBarController : MonoBehaviour
 
         MoneyBarFiller();
         ColorChanger();
+        SwithcStatu();
     }
 
     private void MoneyBarFiller()
@@ -38,7 +43,23 @@ public class MoneyBarController : MonoBehaviour
         Color moneyColor = Color.Lerp(Color.red, Color.green, (currentMoney / maxMoney));
 
         moneyBar.color = moneyColor;
+        statuText.color = moneyColor;
 
+    }
+    private void SwithcStatu()
+    {
+        if (currentMoney <= 33)
+        {
+            statuText.text = PlayerType.POOR.ToString();
+        }
+        else if (currentMoney >= 34 && currentMoney < 66)
+        {
+            statuText.text = PlayerType.AVERAGE.ToString();
+        }
+        else if (currentMoney >= 66)
+        {
+            statuText.text = PlayerType.RICH.ToString();
+        }
     }
     public void SetMoney(float money)
     {

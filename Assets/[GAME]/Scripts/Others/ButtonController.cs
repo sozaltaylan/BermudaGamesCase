@@ -19,6 +19,7 @@ public class ButtonController : MonoBehaviour
     private void HandleButtonClicked()
     {
         CoreGameSignals.onGameStart?.Invoke();
+        CoreGameSignals.onInputToggle?.Invoke(true);
         button.gameObject.SetActive(false);
     }
 

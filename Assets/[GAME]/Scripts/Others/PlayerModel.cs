@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.TextCore.Text;
+using BermudaGamesCase.Controllers;
 
 namespace BermudaGamesCase.Others
 {
@@ -12,10 +13,11 @@ namespace BermudaGamesCase.Others
     {
         #region Variables
 
-        public List<ModelAnimation> listModelAnimation;
+        public List<ModelState> listModelStates;
 
-        private ModelAnimation _selectedModel;
+        private ModelState _selectedModel;
 
+        [SerializeField] private PlayerAnimationController playerAnimationController;
 
 
         private bool isMove;
@@ -25,48 +27,89 @@ namespace BermudaGamesCase.Others
 
         private void Start()
         {
-            _selectedModel = listModelAnimation[0];
+            _selectedModel = listModelStates[0];
         }
 
-        public void SetAnimation()
+        private void SwitchModel(PlayerType playerType)
         {
-            _selectedModel.SetAnimation(1);
-        }
-
-        private void SwitchModel(int modelIndex)
-        {
-            foreach (var model in listModelAnimation)
+            if (_selectedModel.playerType != playerType)
             {
-                model.gameObject.SetActive(false);
+                DOTurn();
             }
+            
+        }
 
-            listModelAnimation[modelIndex].gameObject.SetActive(true);
+        private void DOTurn()
+        {
+
+            Sequence s = DOTween.Sequence();
+            s.Append(transform.DOLocalRotate(Vector3.up * 360, .5f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutSine));
+            s.Join(transform.DOLocalJump(Vector3.zero, .2f, 1, .35f).SetEase(Ease.Linear));
+
         }
 
         public void CheckModelChange(float currentMoney)
         {
-            int modelIndex;
+            for (int i = 0; i < listModelStates.Count; i++)
+            {
+                if (i != (listModelStates.Count - 1))
+                {
+                    if (currentMoney >= listModelStates[i].upgradeMoney && currentMoney < listModelStates[i + 1].upgradeMoney)
+                    {
+                        SwitchModel(listModelStates[i].playerType);
+                        _selectedModel = listModelStates[i];
+                        listModelStates[i].model.SetActive(true);
+                        playerAnimationController.SetAnimation(listModelStates[i].animatorParamater.ToString(), true);
 
-            if (currentMoney <= 33)
-            {
-                modelIndex = 0;
-            }
-            else if (currentMoney <= 66)
-            {
-                modelIndex = 1;
-            }
-            else
-            {
-                modelIndex = 2;
-            }
+                    }
+                    else
+                    {
+                        listModelStates[i].model.SetActive(false);
+                        playerAnimationController.SetAnimation(listModelStates[i].animatorParamater.ToString(), false);
+                    }
+                }
+                else
+                {
+                    if (currentMoney >= listModelStates[i].upgradeMoney)
+                    {
+                        SwitchModel(listModelStates[i].playerType);
+                        _selectedModel = listModelStates[i];
+                        listModelStates[i].model.SetActive(true);
+                    }
+                    else
+                    {
+                        listModelStates[i].model.SetActive(false);
+                        playerAnimationController.SetAnimation(listModelStates[i].animatorParamater.ToString(), false);
+                    }
+                }
 
-            _selectedModel = listModelAnimation[modelIndex];
-            SwitchModel(modelIndex);
+
+            }
+        }
+
+        public PlayerType GetModel()
+        {
+            for (int i = 0; i < listModelStates.Count; i++)
+            {
+                if (listModelStates[i].model.activeInHierarchy)
+                {
+                    return listModelStates[i].playerType;
+                }
+            }
+            return default;
         }
 
         #endregion
 
     }
 
+    [Serializable]
+    public struct ModelState
+    {
+        public PlayerType playerType;
+        public GameObject model;
+        public float upgradeMoney;
+        public AnimatorParameters animatorParamater;
+    }
 
 }
