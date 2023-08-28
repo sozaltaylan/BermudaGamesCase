@@ -3,7 +3,7 @@ using BermudaGamesCase.Signals;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ButtonController : MonoBehaviour
+public class TapToPlayButton : MonoBehaviour
 {
     [SerializeField] private Button button;
 

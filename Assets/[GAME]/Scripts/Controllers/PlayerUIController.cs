@@ -1,11 +1,13 @@
 using BermudaGamesCase.Enums;
 using DG.Tweening;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MoneyBarController : MonoBehaviour
+public class PlayerUIController : MonoBehaviour
 {
+    #region Variables
     public Image moneyBar;
 
     [SerializeField] private float currentMoney, maxMoney;
@@ -13,7 +15,6 @@ public class MoneyBarController : MonoBehaviour
 
     [SerializeField] private GameObject playerUI;
     [SerializeField] private TextMeshProUGUI statuText;
-    [SerializeField] private TextMeshProUGUI statuAnimText;
 
     float lerpSpeed;
 
@@ -21,12 +22,21 @@ public class MoneyBarController : MonoBehaviour
 
     public float CurrentMoney => currentMoney;
     #endregion
+
+    #endregion
     private void Start()
     {
         currentMoney = startMoney;
+
     }
 
     private void Update()
+    {
+
+        HandleUpdate();
+    }
+
+    private void HandleUpdate()
     {
 
         lerpSpeed = 3f * Time.deltaTime;
@@ -41,7 +51,7 @@ public class MoneyBarController : MonoBehaviour
         moneyBar.fillAmount = Mathf.Lerp(moneyBar.fillAmount, currentMoney / maxMoney, lerpSpeed);
     }
 
-   private void ColorChanger()
+    private void ColorChanger()
     {
         Color moneyColor = Color.Lerp(Color.red, Color.green, (currentMoney / maxMoney));
 
@@ -65,20 +75,17 @@ public class MoneyBarController : MonoBehaviour
         }
     }
 
-    public void SetMoney(float money)
+    public void SetBarMoney(float money)
     {
-            currentMoney += money;
+        currentMoney += money;
     }
 
     public void SetBarUI(bool active)
     {
         playerUI.SetActive(active);
     }
-
-    public void CreateStatuTextAnimation()
-    {
-        statuAnimText.gameObject.SetActive(true);
-        statuAnimText.rectTransform.DOScale(3, 2);
-        statuAnimText.DOFade(.5f, 2);
-    }
 }
+
+
+
+

@@ -18,7 +18,7 @@ namespace BermudaGamesCase.Controllers
         #region SerializedFields
 
         [SerializeField] private SplineFollower splineFollower;
-        [SerializeField] private MoneyBarController moneyBarController;
+        [SerializeField] private PlayerUIController moneyBarController;
         [SerializeField] private PlayerData playerData;
         [SerializeField] private PlayerModel playerModel;
         [SerializeField] private PlayerAnimationController playerAnimationController;
@@ -50,7 +50,6 @@ namespace BermudaGamesCase.Controllers
             var lerpOffset = Mathf.Lerp(offsetPos, movementXPosition, Time.deltaTime * lerpSpeed);
 
             splineFollower.offsetModifier.keys[0].offset.x = lerpOffset;
-            CoreGameSignals.onChangeCameraTargetPosition?.Invoke(movementXPosition);
 
             var rotateInput = InputManager.Instance.DistanceHorizontal * rotationAngle;
             var clampedRotate = Mathf.Clamp(rotateInput, -maxRotateAngle, maxRotateAngle);
@@ -64,14 +63,15 @@ namespace BermudaGamesCase.Controllers
             splineFollower.enabled = active;
         }
 
-        private void OnTriggerEnter(Collider coll)
+        private void OnTriggerEnter(Collider coll) // TODO : Optimize et
         {
             if (coll.gameObject.TryGetComponent(out CollectibleItem item))
             {
-                moneyBarController.SetMoney(item.itemMoney);
+                moneyBarController.SetBarMoney(item.itemMoney);
+
 
                 CoreGameSignals.onChangeTotalMoney?.Invoke(item.itemMoney);
-                CoreGameSignals.UpgradeTotalMoneyUI?.Invoke();
+                CoreGameSignals.upgradeTotalMoneyUI?.Invoke();
 
                 item.Interaction();
 
@@ -80,9 +80,10 @@ namespace BermudaGamesCase.Controllers
 
             else if (coll.gameObject.TryGetComponent(out Gate gate))
             {
-                moneyBarController.SetMoney(gate.money);
+                moneyBarController.SetBarMoney(gate.money);
+
                 CoreGameSignals.onChangeTotalMoney?.Invoke(gate.money);
-                CoreGameSignals.UpgradeTotalMoneyUI?.Invoke();
+                CoreGameSignals.upgradeTotalMoneyUI?.Invoke();
 
                 playerModel.CheckModelChange(GetMoney());
 
@@ -94,10 +95,11 @@ namespace BermudaGamesCase.Controllers
             }
             else if (coll.gameObject.TryGetComponent(out Machine machine))
             {
-                moneyBarController.SetMoney(machine.money);
+                moneyBarController.SetBarMoney(machine.money);
+
 
                 CoreGameSignals.onChangeTotalMoney?.Invoke(machine.money);
-                CoreGameSignals.UpgradeTotalMoneyUI?.Invoke();
+                CoreGameSignals.upgradeTotalMoneyUI?.Invoke();
 
                 machine.Interaction();
                 playerModel.CheckModelChange(GetMoney());
@@ -121,11 +123,12 @@ namespace BermudaGamesCase.Controllers
         private void SetFinal()
         {
             SetSplineFollower(false);
-            CameraManager.Instance.StopFollow();
             transform.DORotate(Vector3.up * 180, .5f, RotateMode.LocalAxisAdd);
             moneyBarController.SetBarUI(false);
 
-
+            CoreGameSignals.onChangeCameraTargetPosition?.Invoke();
+            CoreGameSignals.onSetNextLevelButtonUI?.Invoke(true);
+            
             if (!playerModel.IsPoor())
                 playerAnimationController.SetDanceAnimation(true);
             else

@@ -7,10 +7,20 @@ namespace BermudaGamesCase.Signals
     public static class CoreGameSignals 
     {
         public static UnityAction onGameStart;
-        public static UnityAction<float> onChangeCameraTargetPosition;
+
+        public static UnityAction onChangeCameraTargetPosition;
+
         public static UnityAction<bool> onInputToggle;
+
         public static UnityAction<float> onChangeTotalMoney;
-        public static UnityAction UpgradeTotalMoneyUI;
+
+        public static UnityAction upgradeTotalMoneyUI;
+
+        public static UnityAction<bool> onSetNextLevelButtonUI;
+
+        public static UnityAction<int> onSetLevelText;
+
+        public static UnityAction onLoadNextScene;
     }
 }
 

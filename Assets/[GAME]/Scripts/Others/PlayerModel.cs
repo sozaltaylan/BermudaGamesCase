@@ -18,7 +18,7 @@ namespace BermudaGamesCase.Others
         private ModelState _selectedModel;
 
         [SerializeField] private PlayerAnimationController playerAnimationController;
-        [SerializeField] private MoneyBarController moneyBarController;
+        [SerializeField] private PlayerUIController moneyBarController;
 
 
         private bool isMove;
@@ -38,12 +38,10 @@ namespace BermudaGamesCase.Others
                 if (_selectedModel.index < playerIndex)
                 {
                     DOTurn();
-                    moneyBarController.CreateStatuTextAnimation();
                 }
                 else
                 {
                     playerAnimationController.SetSad(true);
-                    moneyBarController.CreateStatuTextAnimation();
                 }
             }
 
